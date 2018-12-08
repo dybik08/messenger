@@ -1,0 +1,39 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "Chat app made by Dybik",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch src/server --exec ts-node src/server/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "react.js",
+    "express.js",
+    "node.js"
+  ],
+  "author": "Wojciech Dybikowski",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/helmet": "0.0.42",
+    "@types/react": "^16.7.13",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-router-dom": "^4.3.1",
+    "nodemon": "^1.18.7",
+    "ts-loader": "^5.3.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1",
+    "webpack-dev-middleware": "^3.4.0"
+  }
+}
