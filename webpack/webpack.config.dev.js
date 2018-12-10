@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: path.join(__dirname, 'src/client/index.tsx'),
+    entry: path.join(__dirname, '../src/client/index.tsx'),
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, '../dist'),
         publicPath: '/'
     },
     devtool: 'source-map',
@@ -12,7 +12,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                exclude: /node_modules/,
+                exclude: /..\/node_modules/,
                 loader: 'ts-loader'
             }
         ]
@@ -20,5 +20,4 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
-    mode: 'development'
 };
