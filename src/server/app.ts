@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as path from 'path';
-import { Router } from './controllers/index';
+import { Router } from './modules/module';
 import * as mongoose from 'mongoose';
 
 class App {
