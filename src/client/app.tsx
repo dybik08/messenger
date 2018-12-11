@@ -13,7 +13,7 @@ export default () => {
     return (
         <Router>
             <Switch>
-                <Route exact path="/" component={Home}/>
+                <Route path="/" component={Home}/>
                 <Route path="/signin" component={Signin}/>
                 <Route path="/signup" component={Signup}/>
             </Switch>
