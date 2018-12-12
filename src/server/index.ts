@@ -11,4 +11,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
-app.listen(PORT, () => console.log('Running on localhost:', PORT));
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+io.on('connection', (socket: any) => {
+    console.log('a user connected');
+});
+
+http.listen(PORT, () => console.log('Running on localhost:', PORT));
