@@ -12,9 +12,7 @@ app.get('*', (req, res) => {
 });
 
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
-io.on('connection', (socket: any) => {
-    console.log('a user connected');
-});
+import SocketsController from './modules/sockets/sockets.controller';
+const sockets = new SocketsController(http);
 
 http.listen(PORT, () => console.log('Running on localhost:', PORT));

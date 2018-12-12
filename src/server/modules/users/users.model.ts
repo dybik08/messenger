@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { saltRounds } from '../../config';
 
 const User = new Schema({
+    socket: { type: String, default: '' },
     username: { type: String, required: true, index: { unique: true }},
     password: { type: String, required: true },
     email: { type: String, required: true, index: { unique: true }},
