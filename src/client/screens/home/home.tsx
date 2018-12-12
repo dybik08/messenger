@@ -14,7 +14,6 @@ const Home = (props: IProps) => {
 };
 
 const mapStateToProps =
-    ({ auth }: { auth: any }) =>
-        ({ isAuthenticated: auth.isAuthenticated });
+    ({ auth }: { auth: any }) => ({ isAuthenticated: auth.isAuthenticated });
 
 export default connect(mapStateToProps)(Home);
