@@ -19,7 +19,7 @@ interface IProps {
 
 export class Chat extends React.Component<IProps> {
     componentDidMount () {
-        this.props.fetchUsers({});
+        this.props.fetchUsers({ online: true });
     }
 
     openChat(userId: string) {

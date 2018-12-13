@@ -26,6 +26,9 @@ class UsersService {
     async getUserBySocket(socketId: string) {
         return this.User.findOne({ socket: socketId });
     }
+    async getOnlineUsers() {
+        return this.User.find({ socket: { $ne: '' }});
+    }
 }
 
 export default new UsersService(UserModel);
