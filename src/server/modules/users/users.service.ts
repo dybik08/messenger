@@ -1,6 +1,7 @@
 import { Model } from 'mongoose';
 import { IUserDocument } from './users.interface';
 import UserModel from './users.model';
+import omit = require('lodash/omit');
 
 class UsersService {
     private User: Model<IUserDocument>;
@@ -8,10 +9,20 @@ class UsersService {
         this.User = User;
     }
     async getUsers() {
-        return this.User.find({});
+        const users = await this.User.find({}, { password: 0 });
+        return users.map(user => {
+            return {
+                online: user.socket.length > 0,
+                ...omit(user.toObject(), 'socket')
+            }
+        })
     }
     async getUserById(userId: string) {
-        return this.User.findById(userId);
+        const user = await this.User.findById(userId, { password: 0 });
+        return {
+            online: user.socket.length > 0,
+            ...omit(user.toObject(), 'socket')
+        }
     }
     async saveUser(user: IUserDocument) {
         await user.save();
