@@ -22,8 +22,8 @@ export const receiveUsers = (users: Array<IUser>): IAction => ({
     payload: users
 });
 
-export const fetchUser = (userId: string) => {
-    return async (dispatch: Dispatch) => {
+export const fetchUser = (userId: string): any => {
+return async (dispatch: Dispatch) => {
         dispatch(requestUser(userId));
         try {
             const res = await axios.get(`/api/users/${userId}`);
@@ -59,6 +59,11 @@ export const updateUser = (userId: string, data: IUser) => {
         }
     }
 };
+
+export const deletedUser = (userId: string): IAction => ({
+    type: ACTIONS.DELETE_USER,
+    payload: userId
+});
 
 export const setUsersErrors = (errors: IErrors): IAction => ({
     type: ACTIONS.SET_USERS_ERRORS,

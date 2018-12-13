@@ -1,5 +1,6 @@
 import * as io from 'socket.io-client';
-
+import store from '../../store';
+import { fetchUser, deletedUser } from 'services/users/users.actions';
 export default class Socket {
     static _instance: Socket | undefined;
     private _socket: SocketIOClient.Socket | undefined;
@@ -8,9 +9,11 @@ export default class Socket {
     static getInstance(userId?: string): Socket | undefined {
         if(this._instance)
             return this._instance;
+
         if(userId) {
             this._instance = new Socket(userId);
         }
+
         return this._instance;
     }
 
@@ -28,6 +31,14 @@ export default class Socket {
     configure() {
         console.log('running configuration...');
         this._socket.emit('signin', this._userId);
+        this._socket.on('userconnected', (userId: string) => {
+            store.dispatch(fetchUser(userId));
+        });
+
+        this._socket.on('userdisconnected', (userId: string) => {
+            store.dispatch(deletedUser(userId));
+        });
+
         this._socket.on('receive', (message: any) => {
             console.log(message);
         });

@@ -14,19 +14,19 @@ export class SocketsController {
             socket.on('signin', (userId: string) => {
                 console.log('user signed in: ', userId);
                 usersService.connectSocket(userId, socket.id);
-                socket.broadcast.emit('userconnected', { userId });
+                socket.broadcast.emit('userconnected', userId);
             });
             socket.on('signout', async () => {
                 console.log('client signout');
                 usersService.disconnectSocket(socket.id);
                 const user = await usersService.getUserBySocket(socket.id);
-                socket.broadcast.emit('userdisconnected', { userId: user._id });
+                socket.broadcast.emit('userdisconnected', user._id);
             });
             socket.on('disconnect', async () => {
                 console.log('client disconnected');
                 usersService.disconnectSocket(socket.id);
                 const user = await usersService.getUserBySocket(socket.id);
-                socket.broadcast.emit('userdisconnected', { userId: user._id });
+                socket.broadcast.emit('userdisconnected', user._id);
             });
             socket.on('message', async (message: any) => {
                 console.log('received message: ', message);
