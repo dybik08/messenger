@@ -27,7 +27,6 @@ export default class Socket {
 
     configure() {
         console.log('running configuration...');
-        // Attach all controllers to the socket
         this._socket.emit('signin', this._userId);
         this._socket.on('receive', (message: any) => {
             console.log(message);
