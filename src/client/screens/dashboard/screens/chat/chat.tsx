@@ -77,6 +77,7 @@ export class Chat extends React.Component<IProps, IState> {
                             content: message.content
                         }))}
                         send={this.sendMessage}
+                        user={this.props.auth.user._id}
                     />
                 </div>
             </div>

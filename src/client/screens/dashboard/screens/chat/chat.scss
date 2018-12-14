@@ -3,12 +3,19 @@
   display: grid;
   grid-template-columns: 300px auto;
 }
+
 .conversations,
 .conversation {
   height: 100vh;
   overflow-y: auto;
 }
+
 .conversations {
   background: #fafafa;
+  box-shadow: 1px 0 3px -2px #000;
+  padding: .5rem;
+}
+
+.conversation {
   padding: .5rem;
 }
