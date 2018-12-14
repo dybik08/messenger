@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IUser } from 'services/users/users.constants';
-import Conversation from '../conversation/conversation';
+import Conversation from './components/conversation/conversation';
 
 const styles = require('./conversations.scss');
 
