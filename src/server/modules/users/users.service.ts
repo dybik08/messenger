@@ -40,6 +40,10 @@ class UsersService {
     async getOnlineUsers() {
         return this.User.find({ socket: { $ne: '' }});
     }
+    async getUserSocket(userId: string) {
+        const user = await this.User.findById(userId);
+        return user.socket;
+    }
 }
 
 export default new UsersService(UserModel);

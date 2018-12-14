@@ -30,9 +30,8 @@ export class SocketsController {
             });
             socket.on('message', async (message: any) => {
                 console.log('received message: ', message);
-                const user = await usersService.getUserById(message.to);
-                console.log(user);
-                socket.broadcast.to(user.socket).emit('receive', { to: user.username, content: message.content });
+                const user = await usersService.getUserSocket(message.to);
+                socket.broadcast.to(user).emit('receive', message);
             })
         })
     }
