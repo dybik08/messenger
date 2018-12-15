@@ -11,7 +11,8 @@ const User = new Schema({
     firstname: { type: String, default: '' },
     lastname: { type: String, default: '' },
     createdAt: { type: Number, default: Date.now },
-    updatedAt: { type: Number, default: Date.now }
+    updatedAt: { type: Number, default: Date.now },
+    avatar: { type: String, required: true, default: '/gfx/users/placeholder.svg'}
 });
 
 User.pre<IUserDocument>('save', async function(next) {
