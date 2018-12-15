@@ -75,6 +75,19 @@ class UsersController implements IController {
                 }
             })
         )
+        this._router.put(
+            '/:id',
+            catchExceptions(async (req: Request, res: Response ) => {
+                if(req.body.password) {
+                    const user = await UsersService.updateUserPassword(req.params.id, req.body.previous, req.body.password);
+                    res.status(200).json(user);
+                } else {
+                    const user = await UsersService.updateUser(req.params.id, req.body);
+                    const status = user.ok === 1 ? 200 : 400;
+                    res.status(status).json(user.user);
+                }
+            })
+        )
     }
     get route(): string {
         return this._route;
