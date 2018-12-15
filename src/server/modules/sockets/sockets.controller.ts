@@ -32,6 +32,9 @@ export class SocketsController {
                 console.log('received message: ', message);
                 const user = await usersService.getUserSocket(message.to);
                 socket.broadcast.to(user).emit('receive', message);
+            });
+            socket.on('notifyUserUpdate', (userId: string) => {
+                socket.broadcast.emit('updateUser', userId);
             })
         })
     }
