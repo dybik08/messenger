@@ -40,7 +40,8 @@ export class Settings extends React.Component<IProps, IState> {
             firstname: '',
             lastname: '',
             email: '',
-            username: ''
+            username: '',
+            avatar: ''
         },
         password: {
             previous: '',
@@ -66,7 +67,8 @@ export class Settings extends React.Component<IProps, IState> {
                 username: user.username,
                 firstname: user.firstname,
                 lastname: user.lastname,
-                email: user.email
+                email: user.email,
+                avatar: user.avatar
             }
         })
     }
@@ -100,7 +102,8 @@ export class Settings extends React.Component<IProps, IState> {
             username: this.props.users.users[this.props.auth.user._id].username,
             email: this.props.users.users[this.props.auth.user._id].email,
             fristname: this.props.users.users[this.props.auth.user._id].firstname,
-            lastname: this.props.users.users[this.props.auth.user._id].lastname
+            lastname: this.props.users.users[this.props.auth.user._id].lastname,
+            avatar: this.props.users.users[this.props.auth.user._id].avatar,
         };
         this.setState({
             basic: userData
@@ -178,6 +181,10 @@ export class Settings extends React.Component<IProps, IState> {
                             <div className={styles.form__group}>
                                 <label htmlFor="confirm">Confirm</label>
                                 <input id="confirm" name="confirm" type="password" value={password.confirm} onChange={this.changePassword}/>
+                            </div>
+                            <div className={styles.form__group}>
+                                <label htmlFor="avatar">Avatar</label>
+                                <input id="avatar" name="avatar" type="text" value={basic.avatar} onChange={this.changeBasic}/>
                             </div>
                             <Button primary onClick={this.submitPassword}>Submit</Button>
                         </form>
