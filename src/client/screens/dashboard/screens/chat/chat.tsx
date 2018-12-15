@@ -4,7 +4,7 @@ import { IState as IUsersState } from 'services/users/users.constants';
 import { IState as IAuthState } from 'services/auth/auth.constants';
 import { IState as IMessagesState, IMessage } from 'services/messages/messages.constants';
 import { fetchUsers, fetchUser } from 'services/users/users.actions';
-import { sendMessage } from 'services/messages/messages.actions';
+import { sendMessage, fetchMessages } from 'services/messages/messages.actions';
 
 import values = require('lodash/values');
 import omit = require('lodash/omit');
@@ -21,7 +21,8 @@ interface IProps {
     messages: IMessagesState,
     fetchUser(userId: string): any,
     fetchUsers(filter: any): any,
-    sendMessage(message: IMessage): any
+    sendMessage(message: IMessage): any,
+    fetchMessages(userId: string): any,
 }
 
 interface IState {
@@ -37,6 +38,7 @@ export class Chat extends React.Component<IProps, IState> {
     async componentDidMount () {
         await this.props.fetchUsers({});
         await this.props.fetchUser(this.props.auth.user._id);
+        await this.props.fetchMessages(this.props.auth.user._id);
     }
 
     conversationClicked = (userId: string) => {
@@ -110,4 +112,4 @@ const mapStateToProps =
     ({ auth, users, messages }: { auth: any, users: any, messages: any}) =>
         ({ auth, users, messages });
 
-export default connect(mapStateToProps, { fetchUser, fetchUsers, sendMessage })(Chat);
+export default connect(mapStateToProps, { fetchUser, fetchUsers, fetchMessages, sendMessage })(Chat);
