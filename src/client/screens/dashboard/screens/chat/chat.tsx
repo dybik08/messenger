@@ -67,6 +67,31 @@ export class Chat extends React.Component<IProps, IState> {
             lastMessages[key] = array[array.length - 1] ? array[array.length - 1] : null;
         }
 
+        const rightWidget =
+            this.state.current.length > 0 ?
+                (
+                    <div className={styles.conversation}>
+                        <Conversation
+                            messages={messages.map(message => ({
+                                from: this.props.users.users[message.from],
+                                to: this.props.users.users[message.to],
+                                content: message.content,
+                            }))}
+                            send={this.sendMessage}
+                            user={this.props.auth.user._id}
+                        />
+                    </div>
+                ) :
+                (
+                    <div className={styles.placeholder}>
+                        <div className={styles.placeholder__container}>
+                            <i className={`${styles.placeholder__icon} fas fa-angle-left`}></i>
+                            <h1 className={styles.placeholder__heading}>Select conversation</h1>
+                            <p className={styles.placeholder__description}>No conversation has been choosen. <br/>Please select conversation from the box on your left.</p>
+                        </div>
+                    </div>
+                );
+
         return (
             <div className={styles.container}>
                 <div className={styles.conversations}>
@@ -75,17 +100,7 @@ export class Chat extends React.Component<IProps, IState> {
                         lastMessages={lastMessages}
                         onConversationClicked={this.conversationClicked}/>
                 </div>
-                <div className={styles.conversation}>
-                    <Conversation
-                        messages={messages.map(message => ({
-                            from: this.props.users.users[message.from],
-                            to: this.props.users.users[message.to],
-                            content: message.content
-                        }))}
-                        send={this.sendMessage}
-                        user={this.props.auth.user._id}
-                    />
-                </div>
+                { rightWidget }
             </div>
         )
     }
