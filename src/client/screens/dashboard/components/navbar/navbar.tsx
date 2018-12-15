@@ -1,14 +1,36 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { signOut } from 'services/auth/auth.actions';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import classnames from 'classnames';
 
 const styles = require('./navbar.scss');
 
 interface IProps {
+    location: any,
     signOut(): any
 }
+
+const routes = [
+    { to: '/', icon: 'fas fa-comments', text: 'Chat' },
+    { to: '/profile', icon: 'fas fa-user', text: 'Profile' },
+    { to: '/settings', icon: 'fas fa-cogs', text: 'Settings' }
+];
+
 export function Navbar(props: IProps) {
+    const menuItems = routes.map((route, index) => {
+        const classNames = classnames(styles.menu__item, {
+            [styles.menu__item_active]: route.to === props.location.pathname
+        });
+        return (
+            <li key={index}>
+                <Link className={classNames} to={route.to}>
+                    <span className={`${styles.icon} ${route.icon}`}></span><span className={styles.text}>{route.text}</span>
+                </Link>
+            </li>
+        )
+    });
+
     return (
         <nav className={styles.nav}>
             <div className={styles.header}>
@@ -17,21 +39,7 @@ export function Navbar(props: IProps) {
                 <h2 className={styles.subtitle}>@dybsonski</h2>
             </div>
             <ul className={styles.menu}>
-                <li>
-                    <Link className={styles.menu__item} to="/">
-                        <span className={`${styles.icon} fas fa-comments`}></span><span className={styles.text}>Chat</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link className={styles.menu__item} to="/profile">
-                        <span className={`${styles.icon} fas fa-user`}></span><span className={styles.text}>Profile</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link className={styles.menu__item} to="/settings">
-                        <span className={`${styles.icon} fas fa-cogs`}></span><span className={styles.text}>Settings</span>
-                    </Link>
-                </li>
+                { menuItems }
             </ul>
             <div className={styles.footer}>
                 <div className={styles.signout} onClick={props.signOut}>
@@ -43,4 +51,4 @@ export function Navbar(props: IProps) {
     )
 }
 
-export default connect(null, { signOut })(Navbar);
+export default withRouter<any>(connect(null, { signOut })(Navbar));
