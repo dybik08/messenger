@@ -57,6 +57,16 @@ export class Chat extends React.Component<IProps, IState> {
         this.props.sendMessage(data);
     };
 
+    userStartedTyping = () => {
+        const socket = Socket.getInstance();
+        socket.startTyping(this.props.auth.user._id, this.state.current);
+    };
+
+    userStoppedTyping = () => {
+        const socket = Socket.getInstance();
+        socket.stopTyping(this.props.auth.user._id, this.state.current);
+    };
+
     render() {
         const messages =
             this.state.current &&
@@ -66,10 +76,17 @@ export class Chat extends React.Component<IProps, IState> {
 
         const lastMessages: any = {};
         for(let key in this.props.messages.messages) {
+            const isTyping =
+                this.props.messages.messages[key] &&
+                this.props.messages.messages[key].isTyping;
+
             const array =
                 this.props.messages.messages[key] &&
                 this.props.messages.messages[key].items ? this.props.messages.messages[key].items : [];
-            lastMessages[key] = array[array.length - 1] ? array[array.length - 1] : null;
+            lastMessages[key] = {
+                isTyping,
+                message: array[array.length - 1] ? array[array.length - 1] : null
+            }
         }
 
         const rightWidget =
@@ -84,6 +101,8 @@ export class Chat extends React.Component<IProps, IState> {
                             }))}
                             send={this.sendMessage}
                             user={this.props.auth.user._id}
+                            onStartTyping={this.userStartedTyping}
+                            onStopTyping={this.userStoppedTyping}
                         />
                     </div>
                 ) :

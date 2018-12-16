@@ -46,8 +46,37 @@ const reducer: Reducer = (state: IState = INITIAL_STATE, action: IAction) => {
             };
             break;
         }
+
         case ACTIONS.SET_MESSAGES_ERRORS: {
             state = { ...state, errors: action.payload };
+            break;
+        }
+
+        case ACTIONS.START_TYPING: {
+            state = {
+                ...state,
+                messages: {
+                    ...state.messages,
+                    [action.payload]: {
+                        ...state.messages[action.payload],
+                        isTyping: true
+                    }
+                }
+            };
+            break;
+        }
+
+        case ACTIONS.STOP_TYPING: {
+            state = {
+                ...state,
+                messages: {
+                    ...state.messages,
+                    [action.payload]: {
+                        ...state.messages[action.payload],
+                        isTyping: false
+                    }
+                }
+            };
             break;
         }
 
