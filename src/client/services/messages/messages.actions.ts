@@ -48,7 +48,10 @@ export const fetchMessages = (userId: string): any => {
             });
             const result: any = {};
             for(const conversation of mapped) {
-                result[conversation.user] = conversation.messages;
+                result[conversation.user] = {
+                    isTyping: false,
+                    items: conversation.messages
+                };
             }
             dispatch(receiveMessages(result));
         } catch(e) {
