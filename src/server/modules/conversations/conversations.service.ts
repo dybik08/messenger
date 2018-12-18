@@ -10,7 +10,12 @@ class ConversationsService {
     }
 
     async getConversationsForUser(userId: string) {
-        return this.Conversation.find({ users: userId });
+        return this.Conversation.find({
+            $or: [
+                { user1: userId },
+                { user2: userId }
+            ]
+        });
     }
 
     async saveConversation(conversation: IConversationDocument) {
@@ -19,16 +24,29 @@ class ConversationsService {
     }
 
     async pushMessage(message: any) {
-        const users = [message.from, message.to];
+        const user1 = message.from;
+        const user2 = message.to;
         const msg = { from: message.from, content: message.content };
-        const conversation = await this.Conversation.findOne({ users: { $in: users }});
+
+        const condition = {
+            $or: [
+                {
+                    user1: user1,
+                    user2: user2
+                },
+                {
+                    user1: user2,
+                    user2: user1
+                }
+            ]
+        };
+
+        const conversation = await this.Conversation.findOne(condition);
         if(!conversation) {
-            const conv = new ConversationModel({ users });
+            const conv = new ConversationModel({ user1, user2 });
             await this.saveConversation(conv);
         }
-        return this.Conversation.findOneAndUpdate({
-            users: { $in: users }
-        }, {
+        return this.Conversation.findOneAndUpdate(condition, {
             $push: { messages: msg }
         }, {
             new: true
